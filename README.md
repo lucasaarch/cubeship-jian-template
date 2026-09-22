@@ -10,7 +10,7 @@ on a domain and everything it keeps in a managed PostgreSQL.
 
 ## What it creates
 
-- **jian** — Jian `1.0.0`, from `ghcr.io/lucasaarch/jian-gateway`. The API
+- **jian** — Jian `1.0.1`, from `ghcr.io/lucasaarch/jian-gateway`. The API
   answers on the domain you choose, and the panel under `/ui/` on the same
   domain. It holds no state of its own: a redeploy loses nothing.
 - **jian-db** — PostgreSQL 17 with a database named `jian`, attached to the
