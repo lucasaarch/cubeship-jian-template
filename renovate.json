@@ -1,0 +1,46 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":semanticCommits"],
+  "timezone": "America/Sao_Paulo",
+  "labels": ["dependencies", "upstream"],
+  "prConcurrentLimit": 3,
+  "semanticCommitScope": null,
+  "customManagers": [
+    {
+      "description": "Cubeship template.yaml: image + tag pairs under apps/",
+      "customType": "regex",
+      "managerFilePatterns": ["/^template\\.yaml$/"],
+      "matchStrings": [
+        "image:\\s*(?<depName>[^\\s#]+)\\s*\\n(?:\\s*#[^\\n]*\\n)*\\s*tag:\\s*\"?(?<currentValue>[^\\s\"#]+)\"?"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "An upstream release changes what the template deploys, so it has to cut a new template version. 'chore' is invisible to release-please and would strand the update on main.",
+      "matchDatasources": ["docker"],
+      "semanticCommitType": "feat",
+      "separateMinorPatch": true
+    },
+    {
+      "description": "An upstream patch is a fix, not a feature: same shape, corrected behaviour.",
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["patch"],
+      "semanticCommitType": "fix"
+    },
+    {
+      "description": "Majors are migrations, not tag changes — flag them loudly.",
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["major"],
+      "labels": ["dependencies", "upstream", "major-review"],
+      "addLabels": ["breaking"]
+    },
+    {
+      "description": "CI tooling does not change what users deploy, so it stays out of the changelog and cuts no release.",
+      "matchManagers": ["github-actions"],
+      "semanticCommitType": "chore"
+    }
+  ]
+}
