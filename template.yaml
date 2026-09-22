@@ -29,9 +29,7 @@ apps:
   - key: gateway
     name: jian
     image: ghcr.io/lucasaarch/jian-gateway
-    # The commit on Jian's main branch this release runs. Jian has no
-    # versioned image yet; the short-commit tags are the ones that never move.
-    tag: "0549b1c"
+    tag: "1.0.0"
     # The API and the panel, under /ui/, on one port.
     port: 4310
     # The one route that answers without the token.
