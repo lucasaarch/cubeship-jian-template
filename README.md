@@ -10,14 +10,15 @@ on a domain and everything it keeps in a managed PostgreSQL.
 
 ## What it creates
 
-- **jian** — Jian `1.0.1`, from `ghcr.io/lucasaarch/jian-gateway`. The API
+- **jian** — Jian `2.0.0`, from `ghcr.io/lucasaarch/jian-gateway`. The API
   answers on the domain you choose, and the panel under `/ui/` on the same
-  domain. It holds no state of its own: a redeploy loses nothing.
+  domain. A volume at `/home/node` keeps the agents' workbench; everything
+  else lives in the database, so a redeploy loses nothing.
 - **jian-db** — PostgreSQL 17 with a database named `jian`, attached to the
   gateway. Profiles, sessions, history, memories, the run queue and the
   encrypted vault are all in it. Jian migrates it on start.
 
-It needs Cubeship 0.6.0 or newer.
+It needs Cubeship 0.7.0 or newer, for the volume.
 
 ## What you are asked
 
@@ -39,9 +40,27 @@ variable on the app whenever you left it blank.
 3. Create a profile and talk to it.
 4. To reach it from a chat platform, open **Channels** on the profile.
    WhatsApp pairs by scanning a QR code. Telegram takes a BotFather token and
-   shows a webhook URL and secret once; point the bot at them with Telegram's
-   `setWebhook`. A stranger's first message becomes a contact request you
-   approve.
+   points the bot at this domain by itself. A stranger's first message
+   becomes a contact request you approve.
+
+## Agents that run commands
+
+A profile with **Shell** turned on runs commands in the gateway's container,
+which carries Node, Python with `uv`, Go, `git`, `gh`, `ssh`, `curl`, `wget`,
+the text tools (`sed`, `awk`, `rg`, `jq`) and a C toolchain. The agent knows
+the list from a built-in skill and installs more when a task needs it.
+
+The agent installs as an ordinary user, never as root — `npm install -g`,
+`uv tool install`, `go install`, a binary in `~/.local/bin` — and all of it
+lands on the `/home/node` volume, with its SSH keys and its Git and `gh`
+logins. It
+survives redeploys and updates, and it is in the volume's backups: a key or a
+login stored there is in them too.
+
+In a group, the agent reads the conversation and answers only when it is
+mentioned or replied to. A Telegram bot reads a group only with privacy mode
+off: in BotFather, `/setprivacy` → **Disable**, then add the bot to the group
+again.
 
 ## The token is the whole installation
 
@@ -80,9 +99,8 @@ link-local addresses stay blocked whatever it says.
 - **Per-client rate limiting.** Jian limits requests by connection address and
   does not trust `X-Forwarded-For`, so behind the instance's proxy every
   client shares one limit.
-- **More than one copy.** Jian migrates on start and copies would race for it.
-  Keep `scale` at 1; split API and worker with `JIAN_ROLE` only once you know
-  why.
+- **More than one copy.** Jian migrates on start and copies would race for
+  it, and an app with a volume runs as one copy on one server anyway.
 
 ## Updating Jian
 
@@ -91,10 +109,15 @@ database on start and a migration does not undo itself: back the database up
 before moving to a newer release of this template. Going back to an older
 image does not go back on the schema.
 
+Jian 2.0.0 changes how an MCP server is configured: it declares its transport
+and its authentication, which can be any header, a local command or an OAuth
+sign-in. Check each server under **MCP** after updating.
+
 ## Resources
 
 The gateway is limited to 1 CPU and 1 GiB of memory, and the database to the
-same. Raise `limits` in `template.yaml` if you need more.
+same. A Go or C build that an agent runs counts against the gateway's
+share. Raise `limits` in `template.yaml` if you need more.
 
 ---
 
