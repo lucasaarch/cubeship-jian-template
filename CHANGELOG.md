@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/lucasaarch/cubeship-jian-template/compare/v2.0.0...v2.1.0) (2026-09-23)
+
+
+### Features
+
+* run Jian 2.1.0 ([fc6fe24](https://github.com/lucasaarch/cubeship-jian-template/commit/fc6fe242e9dc84bee3ae8cfa2d018bfb76e58d2c))
+
 ## [2.0.0](https://github.com/lucasaarch/cubeship-jian-template/compare/v1.1.1...v2.0.0) (2026-09-23)
 
 
