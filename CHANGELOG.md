@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/lucasaarch/cubeship-jian-template/compare/v1.1.1...v2.0.0) (2026-09-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* run Jian 2.0.0 with a home for the agents' tools
+
+### Features
+
+* run Jian 2.0.0 with a home for the agents' tools ([bf2c89b](https://github.com/lucasaarch/cubeship-jian-template/commit/bf2c89b152a23102cf63f213d6195c5e61fd47f8))
+
 ## [1.1.1](https://github.com/lucasaarch/cubeship-jian-template/compare/v1.1.0...v1.1.1) (2026-09-22)
 
 
