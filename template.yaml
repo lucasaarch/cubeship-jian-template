@@ -29,7 +29,7 @@ apps:
   - key: gateway
     name: jian
     image: ghcr.io/lucasaarch/jian-gateway
-    tag: "2.0.0"
+    tag: "2.1.0"
     # The API and the panel, under /ui/, on one port.
     port: 4310
     # The one route that answers without the token.

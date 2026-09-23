@@ -10,7 +10,7 @@ on a domain and everything it keeps in a managed PostgreSQL.
 
 ## What it creates
 
-- **jian** — Jian `2.0.0`, from `ghcr.io/lucasaarch/jian-gateway`. The API
+- **jian** — Jian `2.1.0`, from `ghcr.io/lucasaarch/jian-gateway`. The API
   answers on the domain you choose, and the panel under `/ui/` on the same
   domain. A volume at `/home/node` keeps the agents' workbench; everything
   else lives in the database, so a redeploy loses nothing.
@@ -56,6 +56,10 @@ lands on the `/home/node` volume, with its SSH keys and its Git and `gh`
 logins. It
 survives redeploys and updates, and it is in the volume's backups: a key or a
 login stored there is in them too.
+
+To let an agent search the internet, add a Tavily key under **Providers →
+Web search** and switch on **Allow web search** on its profile. The free
+Tavily plan covers 1,000 searches a month.
 
 In a group, the agent reads the conversation and answers only when it is
 mentioned or replied to. A Telegram bot reads a group only with privacy mode
