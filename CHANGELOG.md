@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/lucasaarch/cubeship-jian-template/compare/v2.1.0...v2.1.1) (2026-09-29)
+
+
+### Bug Fixes
+
+* use Jian 0.1.0 image ([6b9536f](https://github.com/lucasaarch/cubeship-jian-template/commit/6b9536fb6b1791c34330c7bb7341277adaf3da75))
+
 ## [2.1.0](https://github.com/lucasaarch/cubeship-jian-template/compare/v2.0.0...v2.1.0) (2026-09-23)
 
 
