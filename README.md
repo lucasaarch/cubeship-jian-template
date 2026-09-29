@@ -113,9 +113,8 @@ database on start and a migration does not undo itself: back the database up
 before moving to a newer release of this template. Going back to an older
 image does not go back on the schema.
 
-Jian 2.0.0 changes how an MCP server is configured: it declares its transport
-and its authentication, which can be any header, a local command or an OAuth
-sign-in. Check each server under **MCP** after updating.
+After updating, check each server under **MCP**. It can use a header, a local
+command or an OAuth sign-in, depending on its transport and authentication.
 
 ## Resources
 
